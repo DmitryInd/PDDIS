@@ -5,8 +5,8 @@
 function check_memory {
     while [ true ]
     do
-    total_mem=$(cat /proc/meminfo | grep MemTotal | grep -oe [1-9]*)
-    mem_free=$(cat /proc/meminfo | grep MemFree | grep -oe [1-9]*)
+    total_mem=$(cat /proc/meminfo | grep MemTotal | grep -oe [0-9]*)
+    mem_free=$(cat /proc/meminfo | grep MemFree | grep -oe [0-9]*)
     per_usage=$((100 - (100*$mem_free)/$total_mem))
     echo "$(date +"%Y-%m-%d %T");$total_mem;$mem_free;$per_usage" >> memory_logs.csv
     sleep 600
