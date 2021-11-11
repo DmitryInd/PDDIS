@@ -5,13 +5,3 @@
 
 Если у вас домашний компьютер на Windows вы не сможете разрабатывать playbook (Windows is not supported for the control node, read more about this in Matt Davis’s blog post.).
 Поэтому, используйте одну из машин (например, CentOS) в качестве control node. В файле host пропишите обе машины по IP, ansible в этом случае будет поднимать две ssh сессии на обе машины, несмотря на то что одна из них для него localhost
-
-Сервера
-CentOS 8 (ENG)
-IP-Адреса(SSH Ready)
-194.87.57.31
-
-Операционная Система
-Debian 10 (ENG)
-IP-Адреса(SSH Ready)
-194.87.107.68

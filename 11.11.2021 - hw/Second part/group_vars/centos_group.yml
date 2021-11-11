@@ -1,0 +1,11 @@
+---
+
+ansible_ssh_user: "mftiedu"
+ansible_ssh_pass: "cHONtic"
+ansible_sudo_pass: "cHONtic"
+
+path_to_project: /home/mftiedu/indenbom-de/git
+
+ansible_python_interpreter: /usr/bin/python3
+
+...
