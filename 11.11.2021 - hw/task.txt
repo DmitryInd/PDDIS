@@ -15,6 +15,3 @@ IP-Адреса(SSH Ready)
 Debian 10 (ENG)
 IP-Адреса(SSH Ready)
 194.87.107.68
-
-общий юзер
-mftiedu:cHONtic
