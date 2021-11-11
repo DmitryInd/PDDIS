@@ -1,0 +1,43 @@
+---
+
+- name: nginx_setup
+  hosts: all
+  become: no
+  
+  tasks:
+    - name: system_os_detection 
+      debug: var=ansible_os_family
+      
+    - name: check_nginx_installed
+      package_facts:
+      
+    - name: check_nginx_launched
+      service_facts:
+      
+    - block: #======CentOS======
+      - name: install_nginx
+        yum: update_cache=yes name=nginx state=latest
+        when: "'nginx' not in ansible_facts.packages"
+      - name: add_fw_rule
+        firewalld: zone=public permanent=yes state=enabled service='http'
+        when: "'nginx' not in ansible_facts.services or ansible_facts.services['nginx'].state != 'running'"
+      - name: launch_nginx
+        service: name=nginx state=started
+        when: "'nginx' not in ansible_facts.services or ansible_facts.services['nginx'].state != 'running'"
+      when: ansible_os_family == "RedHat"
+      become: yes
+      
+    - block: #======Debian======
+      - name: install_nginx
+        apt: update_cache=yes name=nginx state=latest
+        when: "'nginx' not in ansible_facts.packages"
+      - name: add_fw_rule
+        ufw: rule=allow name='Nginx HTTP'
+        when: "'nginx' not in ansible_facts.services or ansible_facts.services['nginx'].state != 'running'"
+      - name: launch_nginx
+        service: name=nginx state=started
+        when: "'nginx' not in ansible_facts.services or ansible_facts.services['nginx'].state != 'running'"
+      when: ansible_os_family == "Debian"
+      become: yes
+
+...
