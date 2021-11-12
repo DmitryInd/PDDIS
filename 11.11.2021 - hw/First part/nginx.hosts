@@ -1,0 +1,5 @@
+[centos_group]
+cent_os_server.domain ansible_ssh_host=194.87.57.31
+
+[debian_group]
+debian_server.domain ansible_ssh_host=194.87.107.68

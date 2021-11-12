@@ -1,0 +1,70 @@
+---
+
+- name: launch django project
+  hosts: all
+  become: no
+  
+  tasks:
+    - name: system os detection 
+      debug: var=ansible_os_family
+      
+    - name: check packages
+      package_facts:
+      
+    - block: #======Installing packages on CentOS======
+      - name: install python
+        yum: update_cache=yes name=python3 state=latest
+        when: "'python3' not in ansible_facts.packages"
+      - name: install pip
+        yum: update_cache=yes name=python3-pip state=latest
+        when: "'python3-pip' not in ansible_facts.packages"
+      when: ansible_os_family == "RedHat"
+      become: yes
+      
+    - block: #======Installing packages on Debian======
+      - name: install python
+        apt: update_cache=yes name=python3 state=latest
+        when: "'python3' not in ansible_facts.packages"
+      - name: install pip
+        apt: update_cache=yes name=python-pip state=latest
+        when: "'python3-pip' not in ansible_facts.packages"
+      when: ansible_os_family == "Debian"
+      become: yes
+      
+    - block: #======Installing required components======
+      - name: install django
+        pip: executable=pip3 name=django state=latest
+        
+      - name: install Pillow
+        pip: executable=pip3 name=Pillow state=latest
+        
+      - name: install feedparser
+        pip: executable=pip3 name=feedparser state=latest
+        
+      - name: install xlsxwriter
+        pip: executable=pip3 name=xlsxwriter state=latest
+      become: yes
+
+    - name: delete a directory if it exists
+      file:
+        path: '{{path_to_project}}'
+        state: absent
+      
+    - name: create a directory for git files
+      file:
+        path: '{{path_to_project}}'
+        state: directory
+        mode: '0777'
+        
+    - name: clone a repo with a project
+      git:
+        repo: '{{git_link_to_project}}'
+        dest: '{{path_to_project}}'
+    
+    - name: migrate project
+      shell: "python3 {{path_to_project}}/manage.py migrate"
+        
+    - name: launch project
+      shell: "python3 {{path_to_project}}/manage.py runserver &"
+
+...
