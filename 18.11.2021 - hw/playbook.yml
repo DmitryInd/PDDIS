@@ -53,6 +53,8 @@
       become: yes
       
     - name: launch project
-      shell: java -jar /home/mftiedu/json-card-reader/json-reader-1.0-SNAPSHOT.jar
+      shell: |
+        cd /home/mftiedu/json-card-reader/
+        java -jar json-reader-1.0-SNAPSHOT.jar
 
 ...
