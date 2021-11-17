@@ -37,9 +37,10 @@
       become: yes
       
     - name: Copy libs
-      synchronize:
+      copy:
         src: ./target/libs
         dest: /home/mftiedu/json-card-reader/libs
+        directory_mode: yes
       
     - block: #======Install java======
       - name: CentOs java installation
