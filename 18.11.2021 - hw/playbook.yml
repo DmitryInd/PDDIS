@@ -12,6 +12,11 @@
       shell: java -version 2>&1 | grep version | awk '{print $3}' | sed 's/"//g'
       register: java_version
       
+    - name: delete a directory if it exists
+      file:
+        path: /home/mftiedu/json-card-reader
+        state: absent
+      
     - name: Create a directory for project files
       file:
         path: /home/mftiedu/json-card-reader
