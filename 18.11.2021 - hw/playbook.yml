@@ -16,6 +16,7 @@
       file:
         path: /home/mftiedu/json-card-reader
         state: absent
+      become: yes
       
     - name: Create a directory for project files
       file:
