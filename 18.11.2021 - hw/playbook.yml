@@ -1,0 +1,57 @@
+---
+
+- name: json-card-reader setup
+  hosts: all
+  become: no
+  
+  tasks:
+    - name: system os detection 
+      debug: var=ansible_os_family
+      
+    - name: Check Java version
+      shell: java -version 2>&1 | grep version | awk '{print $3}' | sed 's/"//g'
+      register: java_version
+      
+    - name: Create a directory for project files
+      file:
+        path: /home/mftiedu/json-card-reader
+        state: directory
+        mode: '0777'
+      become: yes
+    
+    - name: Copy jar file
+      copy:
+        src: ../target/json-reader-1.0-SNAPSHOT.jar
+        dest: /home/mftiedu/json-card-reader/json-reader-1.0-SNAPSHOT.jar
+        
+    - name: Copy test json file
+      copy:
+        src: ../IndividualClientCard.json
+        dest: /home/mftiedu/json-card-reader/IndividualClientCard.json
+        
+    - name: Create a directory for libs
+      file:
+        path: /home/mftiedu/json-card-reader/libs
+        state: directory
+        mode: '0777'
+      become: yes
+      
+    - name: Copy libs
+      synchronize:
+        src: ../target/libs
+        dest: /home/mftiedu/json-card-reader/libs
+      
+    - block: #======Install java======
+      - name: CentOs java installation
+        yum: update_cache=yes name=java-1.8.0-openjdk-devel state=latest
+        when: ansible_os_family == "RedHat"
+      - name: Debian java installation
+        apt: update_cache=yes name=openjdk-8-jdk-headless state=latest
+        when: ansible_os_family == "Debian"
+      when: java_version.stdout == "" or java_version.stdout is version('1.8', '<')
+      become: yes
+      
+    - name: launch project
+      shell: java -jar /home/mftiedu/json-card-reader/json-reader-1.0-SNAPSHOT.jar
+
+...
