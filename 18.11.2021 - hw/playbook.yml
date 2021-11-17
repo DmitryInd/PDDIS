@@ -21,12 +21,12 @@
     
     - name: Copy jar file
       copy:
-        src: ../target/json-reader-1.0-SNAPSHOT.jar
+        src: ./target/json-reader-1.0-SNAPSHOT.jar
         dest: /home/mftiedu/json-card-reader/json-reader-1.0-SNAPSHOT.jar
         
     - name: Copy test json file
       copy:
-        src: ../IndividualClientCard.json
+        src: ./IndividualClientCard.json
         dest: /home/mftiedu/json-card-reader/IndividualClientCard.json
         
     - name: Create a directory for libs
@@ -38,7 +38,7 @@
       
     - name: Copy libs
       synchronize:
-        src: ../target/libs
+        src: ./target/libs
         dest: /home/mftiedu/json-card-reader/libs
       
     - block: #======Install java======
