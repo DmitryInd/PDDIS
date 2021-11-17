@@ -39,7 +39,7 @@
     - name: Copy libs
       copy:
         src: ./target/libs
-        dest: /home/mftiedu/json-card-reader/libs
+        dest: /home/mftiedu/json-card-reader
         directory_mode: yes
       
     - block: #======Install java======
