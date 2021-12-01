@@ -6,7 +6,7 @@ services:
     container_name: chat_server
     build: server/
     ports:
-      - 5050:5050
+      - 5050:5050/udp
       
   first_client:
     container_name: first_chat_client
