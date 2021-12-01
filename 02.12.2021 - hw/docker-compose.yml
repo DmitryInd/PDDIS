@@ -1,0 +1,27 @@
+version: "3.8"
+
+
+services:
+  server:
+    container_name: chat_server
+    build: server/
+    ports:
+      - 5050:5050
+      
+  first_client:
+    container_name: first_chat_client
+    build: client/
+    network_mode: host
+    stdin_open: true # docker run -i
+    tty: true # docker run -t
+    depends_on:
+      - server
+      
+  second_client:
+    container_name: second_chat_client
+    build: client/
+    network_mode: host
+    stdin_open: true # docker run -i
+    tty: true # docker run -t
+    depends_on:
+      - server
