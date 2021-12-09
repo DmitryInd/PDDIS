@@ -33,7 +33,7 @@ spec:
   replicas: 2
   selector:
     matchLabels:
-      app: first-chat-client-server
+      app: first-chat-client
   strategy:
     rollingUpdate:
       maxSurge: 1
