@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat_server_deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: chat_server
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      name: chat_server_pod
+      labels:
+        app: chat_server
+    spec:
+      containers:
+      - image: dmitryind/server-image
+        name: chat_server
+        ports:
+        - containerPort: 5050
+        imagePullPolicy: IfNotPresent
+
+--
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: first_chat_client_deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: first_chat_client_server
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      name: first_chat_client_pod
+      labels:
+        app: first_chat_client
+    spec:
+      containers:
+      - image: dmitryind/client-image
+        name: first_chat_client
+        ports:
+        - containerPort: 4040
+        stdin: true
+        tty: true
+        imagePullPolicy: IfNotPresent
+
+--
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: second_chat_client_deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: second_chat_client
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      name: second_chat_client_pod
+      labels:
+        app: second_chat_client
+    spec:
+      containers:
+      - image: dmitryind/client-image
+        name: second_chat_client
+        ports:
+        - containerPort: 4040
+        stdin: true
+        tty: true
+        imagePullPolicy: IfNotPresent

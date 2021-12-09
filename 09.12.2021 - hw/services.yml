@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: chat_server_service
+spec:
+  ports:
+  - port: 5050
+    targetPort: 5050
+  selector:
+    app: chat_server
+  type: LoadBalancer
+
+--
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: first_chat_client_service
+spec:
+  ports:
+  - port: 4041
+    targetPort: 4040
+  selector:
+    app: first_chat_client
+  type: LoadBalancer
+
+--
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: second_chat_client_service
+spec:
+  ports:
+  - port: 4042
+    targetPort: 4040
+  selector:
+    app: second_chat_client
+  type: LoadBalancer

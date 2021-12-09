@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: chat_server_pod
+  labels:
+    app: chat_server
+spec:
+  containers:
+  - image: dmitryind/server-image
+    name: chat_server
+    ports:
+    - containerPort: 5050
+    imagePullPolicy: IfNotPresent
+
+--
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: first_chat_client_pod
+  labels:
+    app: first_chat_client
+spec:
+  containers:
+  - image: dmitryind/client-image
+    name: first_chat_client
+    ports:
+    - containerPort: 4040
+    stdin: true
+    tty: true
+    imagePullPolicy: IfNotPresent
+
+--
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: second_chat_client_pod
+  labels:
+    app: second_chat_client
+spec:
+  containers:
+  - image: dmitryind/client-image
+    name: second_chat_client
+    ports:
+    - containerPort: 4040
+    stdin: true
+    tty: true
+    imagePullPolicy: IfNotPresent
