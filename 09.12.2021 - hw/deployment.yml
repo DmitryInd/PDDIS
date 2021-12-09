@@ -23,7 +23,7 @@ spec:
         name: chat-server
         ports:
         - containerPort: 5050
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -52,7 +52,7 @@ spec:
         - containerPort: 4040
         stdin: true
         tty: true
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -81,4 +81,4 @@ spec:
         - containerPort: 4040
         stdin: true
         tty: true
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
