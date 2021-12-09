@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: chat_server_deployment
+  name: chat-server-deployment
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: chat_server
+      app: chat-server
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -14,28 +14,26 @@ spec:
     type: RollingUpdate
   template:
     metadata:
-      name: chat_server_pod
+      name: chat-server-pod
       labels:
-        app: chat_server
+        app: chat-server
     spec:
       containers:
       - image: dmitryind/server-image
-        name: chat_server
+        name: chat-server
         ports:
         - containerPort: 5050
         imagePullPolicy: IfNotPresent
-
---
-
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: first_chat_client_deployment
+  name: first-chat-client-deployment
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: first_chat_client_server
+      app: first-chat-client-server
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -43,30 +41,28 @@ spec:
     type: RollingUpdate
   template:
     metadata:
-      name: first_chat_client_pod
+      name: first-chat-client-pod
       labels:
-        app: first_chat_client
+        app: first-chat-client
     spec:
       containers:
       - image: dmitryind/client-image
-        name: first_chat_client
+        name: first-chat-client
         ports:
         - containerPort: 4040
         stdin: true
         tty: true
         imagePullPolicy: IfNotPresent
-
---
-
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: second_chat_client_deployment
+  name: second-chat-client-deployment
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: second_chat_client
+      app: second-chat-client
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -74,13 +70,13 @@ spec:
     type: RollingUpdate
   template:
     metadata:
-      name: second_chat_client_pod
+      name: second-chat-client-pod
       labels:
-        app: second_chat_client
+        app: second-chat-client
     spec:
       containers:
       - image: dmitryind/client-image
-        name: second_chat_client
+        name: second-chat-client
         ports:
         - containerPort: 4040
         stdin: true

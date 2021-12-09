@@ -12,7 +12,7 @@ def get_server_messages_handler(client_socket):
 
 
 if __name__ == "__main__":
-    server = 'chat_server.default.svc.cluster.local', 5050  # Данные сервера
+    server = 'chat-server-service.default.svc.cluster.local', 5050  # Данные сервера
     alias = input() # Вводим наш псевдоним
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     client_socket.bind(('', 4040)) # Зададим порт, с которого будем получать сообщения 

@@ -1,39 +1,38 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: chat_server_service
+  name: chat-server-service
 spec:
   ports:
   - port: 5050
     targetPort: 5050
+    protocol: UDP
   selector:
-    app: chat_server
+    app: chat-server
   type: LoadBalancer
-
---
-
+---
 apiVersion: v1
 kind: Service
 metadata:
-  name: first_chat_client_service
+  name: first-chat-client-service
 spec:
   ports:
   - port: 4041
     targetPort: 4040
+    protocol: UDP
   selector:
-    app: first_chat_client
+    app: first-chat-client
   type: LoadBalancer
-
---
-
+---
 apiVersion: v1
 kind: Service
 metadata:
-  name: second_chat_client_service
+  name: second-chat-client-service
 spec:
   ports:
   - port: 4042
     targetPort: 4040
+    protocol: UDP
   selector:
-    app: second_chat_client
+    app: second-chat-client
   type: LoadBalancer
