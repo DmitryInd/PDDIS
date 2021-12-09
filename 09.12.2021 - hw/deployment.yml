@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-server-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: chat-server
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      name: chat-server-pod
+      labels:
+        app: chat-server
+    spec:
+      containers:
+      - image: dmitryind/server-image
+        name: chat-server
+        ports:
+        - containerPort: 5050
+        imagePullPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: first-chat-client-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: first-chat-client
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      name: first-chat-client-pod
+      labels:
+        app: first-chat-client
+    spec:
+      containers:
+      - image: dmitryind/client-image
+        name: first-chat-client
+        ports:
+        - containerPort: 4040
+        stdin: true
+        tty: true
+        imagePullPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: second-chat-client-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: second-chat-client
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      name: second-chat-client-pod
+      labels:
+        app: second-chat-client
+    spec:
+      containers:
+      - image: dmitryind/client-image
+        name: second-chat-client
+        ports:
+        - containerPort: 4040
+        stdin: true
+        tty: true
+        imagePullPolicy: Always
